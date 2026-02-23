@@ -56,3 +56,16 @@ depending on your window size, you may need to scroll to see the full table.
 Option 5 exits the code and cancels the runtime. Nothing more to it.
 
 Option 6 toggles the debug mode. When doing the previous operations (besides 5), there will be additional print messages indicating when an action is being performed. To cancel the debug mode, just enter 6 at the main menu again.
+
+
+## Non-Trivial Test Cases
+
+1. Collision Handling Test
+   Put APPLE 10, PUT PLEAP 20, PUT LAPEL 30, PRINT TABLE.
+
+   When the debug mode is active, this will demonstrate how the function handles collisions and properly fixes them with linear probing.
+
+2. Resizing Test
+   PUT apple 1, PUT banana 2, PUT grape 3, PUT orange 4, PUT mango 5, PUT lemon 6, PUT lime 7, PUT peach 8, PUT cherry 9, PUT plum 10,  PUT pear 11, PUT kiwi 12, PUT melon 13, PUT berry 14
+
+   once the table reaches 13 in this scenario, the table will resize up from 17 to 34, and will properly describe this when the debug mode is on, but will be imediately noticable if the table is printed. 
