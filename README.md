@@ -61,9 +61,9 @@ Option 6 toggles the debug mode. When doing the previous operations (besides 5),
 ## Non-Trivial Test Cases
 
 1. Collision Handling Test
-   Put APPLE 10, PUT PLEAP 20, PUT LAPEL 30, PRINT TABLE.
+   Put a 1, b 2, c 3, etc., PRINT TABLE.
 
-   When the debug mode is active, this will demonstrate how the function handles collisions and properly fixes them with linear probing.
+   When the debug mode is active, this will demonstrate how the function handles collisions and properly fixes them with linear probing. After entering in a few variables collisions will begin to occur, where they occur arent always consistent as the variables are placed randomly on the table but they will happen eventually.
 
 2. Resizing Test
    PUT apple 1, PUT banana 2, PUT grape 3, PUT orange 4, PUT mango 5, PUT lemon 6, PUT lime 7, PUT peach 8, PUT cherry 9, PUT plum 10,  PUT pear 11, PUT kiwi 12, PUT melon 13, PUT berry 14
