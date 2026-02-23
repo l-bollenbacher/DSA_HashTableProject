@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <string>
 #include <vector>
@@ -19,7 +18,7 @@ struct Entry {
 
 class HashTable {
 public:
-
+vector<Entry> table; // underlying storage
 bool debug;
     /*
      Creates a hash table with a default capacity of 17
@@ -46,7 +45,7 @@ bool debug;
         // Continues moving forward til it finds and empty slot
         while (table[index].isOccupied && !table[index].isDeleted) {
             
-            if (debug) {
+            if (debug == true) {
         cout << "Collision at index " << index << ", viewing next data slot..." << endl;
     }
 
@@ -54,7 +53,7 @@ bool debug;
             if (table[index].key == key) {
                 table[index].value = value;
                 
-                if (debug) {
+                if (debug == true) {
             cout << "Updated existing key at the index: " << index << endl;
         }
                 return;
@@ -86,14 +85,27 @@ bool debug;
     bool getDaKey(const string& key, int& value) const {
         size_t index = hashFunction(key);
         size_t start = index;
+        
+        if (debug == true) {
+    cout << "PUT operation for key: " << key << endl;
+    }
 
         // Continue probing until we hit an unused slot
         while (table[index].isOccupied) {
+            
+            if (debug == true) {
+        cout << "Collision at index " << index << ", probing next slot..." << endl;
+    }
 
             if (!table[index].isDeleted && table[index].key == key) {
                 value = table[index].value;
                 return true;
             }
+            
+            if (debug == true) {
+            cout << "Updated existing key at index " << index << endl;
+        }
+    
 
             index = (index + 1) % table.size();
 
@@ -156,7 +168,7 @@ bool debug;
 }
 
 private:
-    vector<Entry> table; // underlying storage
+    
     size_t count;        // the number of total data points active in the table
 
     /*
@@ -184,7 +196,7 @@ private:
         table.resize(newCap);
         count = 0;
         
-        if (debug) {
+        if (debug == true) {
     cout << "Resizing table from " << table.size()
          << " to " << table.size() * 2 << endl;
 }
@@ -206,58 +218,71 @@ int main() {
     int choice;
     string key;
     int value;
+    
 
     while (true) {
-        cout << "\n===== Behold the Hash Table =====\n";
-        cout << "1. Insert (PUT)\n";
-        cout << "2. Search (GET)\n";
-        cout << "3. Remove\n";
-        cout << "4. Print Table\n";
-        cout << "5. Exit\n";
-        cout << "6. Toggle Debug Mode\n";
-        cout << "Enter choice: ";
-        cin >> choice;
+    cout << "\n===== Hash Table Menu =====\n";
+    cout << "1. Insert (PUT)\n";
+    cout << "2. Search (GET)\n";
+    cout << "3. Remove\n";
+    cout << "4. Print Table\n";
+    cout << "5. Exit\n";
+    cout << "6. Toggle Debug Mode\n";
+    cout << "Enter choice: ";
 
-        if (choice == 1) {
-            cout << "Enter key: ";
-            cin >> key;
-            cout << "Enter value: ";
-            cin >> value;
-            ht.placeDaKey(key, value);
-        }
-        else if (choice == 2) {
-            cout << "Enter key: ";
-            cin >> key;
+    cin >> choice;
 
-            if (ht.getDaKey(key, value)) {
-                cout << "Value found: " << value << endl;
-            } else {
-                cout << "Key not found.\n";
-            }
-        }
-        else if (choice == 3) {
-            cout << "Enter key to remove: ";
-            cin >> key;
+    if (cin.fail()) {
+        cin.clear();
+        cin.ignore(10000, '\n');
+        cout << "Invalid input. Please enter a number.\n";
+        continue;
+    }
 
-            if (ht.removeDaKey(key)) {
-                cout << "Key removed.\n";
-            } else {
-                cout << "Key not found.\n";
-            }
-        }
-        else if (choice == 4) {
-            ht.printDaTable();
-        }
-        else if (choice == 5) {
-            cout << "Exiting program.\n";
-            break;
-        }
-        else if (choice == 6) {
-            ht.toggleDebug();
-        }
-        else {
-            cout << "Invalid choice. Try again.\n";
-        }
+    if (choice < 1 || choice > 6) {
+        cout << "Invalid option. Choose 1-6.\n";
+        continue;
+    }
+
+    if (choice == 1) {
+        cout << "Enter key: ";
+        cin >> key;
+        cout << "Enter value: ";
+        cin >> value;
+        ht.placeDaKey(key, value);
+    }
+    else if (choice == 2) {
+        cout << "Enter key: ";
+        cin >> key;
+
+        if (ht.getDaKey(key, value))
+            cout << "Value found: " << value << endl;
+        else
+            cout << "Key not found.\n";
+    }
+    else if (choice == 3) {
+        cout << "Enter key to remove: ";
+        cin >> key;
+
+        if (ht.removeDaKey(key))
+            cout << "Key removed.\n";
+        else
+            cout << "Key not found.\n";
+    }
+    else if (choice == 4) {
+        ht.printDaTable();
+    }
+    else if (choice == 5) {
+        cout << "Exiting the program, bye bye...\n";
+        break;
+    }
+    else if (choice == 6) {
+        ht.toggleDebug();
+    }
+}
+
+    return 0;
+}
     }
 
     return 0;
